@@ -3,7 +3,7 @@ import { getAll, getById, getStokMenipis, create, update, remove } from '../cont
 
 const router = express.Router()
 router.get('/', getAll)
-router.get('/stok-menipis', getStokMenipis)   // harus sebelum /:id
+router.get('/stok-menipis', getStokMenipis)
 router.get('/:id', getById)
 router.post('/', create)
 router.put('/:id', update)
