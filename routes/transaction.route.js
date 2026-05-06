@@ -3,7 +3,7 @@ import { getAll, getByUser, getById, create, updateStatus } from '../controllers
 
 const router = express.Router()
 router.get('/', getAll)
-router.get('/user/:id_user', getByUser)   // harus sebelum /:id
+router.get('/user/:id_user', getByUser)
 router.get('/:id', getById)
 router.post('/', create)
 router.put('/:id', updateStatus)
