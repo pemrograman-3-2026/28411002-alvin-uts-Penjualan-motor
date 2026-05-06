@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id Int@id @default(autoincrement()) @map("id_user")
+  name String
+  email String@unique
+  password String
+  role String@default("customer")
+  createdAt DateTime@default(now())
+  updatedAt DateTime@updatedAt
+  transactions Transaction[]
+
+  @@map("users")
+}
+
+model Kategori {
+  id Int@id @default(autoincrement()) @map("id_kategori")
+  name String  @unique
+  motors Motor[]
+
+  @@map("categories")
+}
+
+model Motor {
+  id Int@id @default(autoincrement()) @map("id_motor")
+  name String
+  brand String
+  type String
+  cc Int?
+  year Int?
+  color String?
+  price Int
+  stock Int@default(0)
+  imageUrl String?
+  id_kategori Int
+  category Kategori @relation(fields: [id_kategori], references: [id])
+  createdAt DateTime@default(now())
+  updatedAt DateTime @updatedAt
+  transactionItems TransactionItem[]
+
+  @@map("motors")
+}
+
+model Transaction {
+  id Int@id @default(autoincrement()) @map("id_transaction")
+  id_user Int
+  totalPrice Int
+  status String@default("pending")
+  createdAt DateTime@default(now())
+  user User@relation(fields: [id_user], references: [id])
+  items TransactionItem[]
+
+  @@map("transactions")
+}
+
+model TransactionItem {
+  id Int@id @default(autoincrement()) @map("id_transaction_item")
+  id_transaction Int
+  id_motor Int
+  quantity Int
+  price Int
+  subtotal Int
+  transaction Transaction @relation(fields: [id_transaction], references: [id])
+  motor Motor @relation(fields: [id_motor], references: [id])
+
+  @@map("transaction_items")
+}
