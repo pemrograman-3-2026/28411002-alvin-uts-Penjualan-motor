@@ -7,7 +7,7 @@ import transactionRoute from './routes/transaction.route.js'
 const app = express()
 app.use(express.json())
 
-app.get('/', (req, res) => res.send('🏍️ Toko Motor API berjalan!'))
+app.get('/', (req, res) => res.send('Toko Motor API berjalan!'))
 
 app.use('/api/user', userRoute)
 app.use('/api/kategori', kategoriRoute)
