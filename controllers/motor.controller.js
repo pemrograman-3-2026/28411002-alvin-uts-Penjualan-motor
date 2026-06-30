@@ -25,6 +25,8 @@ export const getStokMenipis = async (req, res) => {
 }
 
 export const create = async (req, res) => {
+  console.log("Body:", req.body);
+
   const { name, brand, type, cc, year, color, price, stock, imageUrl, id_kategori, id_supplier } = req.body
   const data = await prisma.motor.create({
     data: {
@@ -52,6 +54,27 @@ export const update = async (req, res) => {
 }
 
 export const remove = async (req, res) => {
-  await prisma.motor.delete({ where: { id: parseInt(req.params.id) } })
-  res.json({ message: 'Motor dihapus!' })
+  try {
+    const id = parseInt(req.params.id)
+    await prisma.transactionItem.deleteMany({
+      where: {
+        id_motor: id
+      }
+    })
+
+    await prisma.motor.delete({
+      where: {
+        id: id
+      }
+    })
+
+    res.json({
+      message: "Motor berhasil dihapus"
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      message: error.message
+    })
+  }
 }
