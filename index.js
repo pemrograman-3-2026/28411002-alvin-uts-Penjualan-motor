@@ -7,12 +7,14 @@ import cors from "cors";
 import cookieParser from 'cookie-parser'
 
 const app = express()
+
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     origin: 'http://localhost:3001',
     credentials: true
 }))
+
 app.get('/', (req, res) => res.send('Toko Motor API berjalan!'))
 
 app.use('/api/user', userRoute)
